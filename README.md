@@ -5,7 +5,7 @@ dp
 
 The goal of the `dp` package is to provide an extensible deparsing function for R. Like `base::deparse()` and others, the output is intended to produce results that are (almost) identical to the input when evaluated. Unlike the `base` equivalents, `dp` aims at making the output as human-friendly as possible.
 
-The `dp()` function is rougly equivalent to `deparse()`, but with nicer defaults. The `dpc()` function returns an object which can be passed to `eval()` but also retains the desired formatting.
+The `dp()` function is rougly equivalent to `deparse()`, but with nicer defaults. The `dpc()` function returns an object which can be passed to `eval()` but also retains the desired formatting---a better `dput()`.
 
 Examples
 --------
@@ -16,14 +16,14 @@ dp(1)
 dpc(1L)
 #> 1L
 dpc(Sys.time())
-#> as.POSIXct("2016-08-16 17:09:46 CEST")
+#> as.POSIXct("2016-08-16 17:11:32 CEST")
 dpc(print)
 #> base::print
 
 eval(dpc(print))
 #> function (x, ...) 
 #> UseMethod("print")
-#> <bytecode: 0x392fed8>
+#> <bytecode: 0x27c1ed8>
 #> <environment: namespace:base>
 ```
 
@@ -35,7 +35,7 @@ deparse(1)
 dput(1L)
 #> 1L
 dput(Sys.time())
-#> structure(1471360187.05273, class = c("POSIXct", "POSIXt"))
+#> structure(1471360292.17246, class = c("POSIXct", "POSIXt"))
 dput(print)
 #> function (x, ...) 
 #> UseMethod("print")

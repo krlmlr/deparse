@@ -19,7 +19,7 @@ Like `base::deparse()` and others, the output is intended to produce results tha
 Unlike the `base` equivalents, `dp` aims at making the output as human-friendly as possible.
 
 The `dp()` function is rougly equivalent to `deparse()`, but with nicer defaults.
-The `dpc()` function returns an object which can be passed to `eval()` but also retains the desired formatting.
+The `dpc()` function returns an object which can be passed to `eval()` but also retains the desired formatting---a better `dput()`.
 
 
 ## Examples
