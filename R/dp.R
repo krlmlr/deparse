@@ -35,5 +35,5 @@ dp.POSIXlt <- function(x, ...) {
 }
 
 dp_call <- function(call, argument) {
-  paste0(call, "(\"", dp(argument), "\")")
+  paste0(call, "(", dp(argument), ")")
 }
