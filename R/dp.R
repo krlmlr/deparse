@@ -16,5 +16,14 @@ dp <- function(x, ...) UseMethod("dp")
 
 #' @export
 dp.default <- function(x, ...) {
-  paste(deparse(x, 500L), collapse = "")
+  paste(deparse(x, 500L, backtick = TRUE), collapse = "")
+}
+
+#' @export
+dp.Date <- function(x, ...) {
+  dp_call("as.Date", format(x))
+}
+
+dp_call <- function(call, argument) {
+  paste0(call, "(\"", dp(argument), "\")")
 }
