@@ -39,6 +39,7 @@ dp_call <- function(call, argument) {
 #' The \code{dpc} function leverages \code{dp} by creating
 #' a \code{call} object which can be evaluated but retains formatting
 #' (in the form of a \code{\link[base]{srcref}} attribute).
+#' @export
 dpc <- function(x, ...) {
   text <- dp(x, ...)
   as.srcref_call(srcfilecopy("<dpc>", text))
