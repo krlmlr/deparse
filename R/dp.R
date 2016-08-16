@@ -24,6 +24,16 @@ dp.Date <- function(x, ...) {
   dp_call("as.Date", format(x))
 }
 
+#' @export
+dp.POSIXct <- function(x, ...) {
+  dp_call("as.POSIXct", format(x, usetz = TRUE))
+}
+
+#' @export
+dp.POSIXlt <- function(x, ...) {
+  dp_call("as.POSIXlt", format(x, usetz = TRUE))
+}
+
 dp_call <- function(call, argument) {
   paste0(call, "(\"", dp(argument), "\")")
 }
