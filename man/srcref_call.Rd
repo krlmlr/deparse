@@ -12,7 +12,7 @@ as.srcref_call(x, ...)
 \description{
 As of R 2.10.0, \code{\link[base]{call}} objects don't use a
 \code{\link[base]{srcref}} attribute
-even if it's attached, see \code{vignette("calls", package = "dp")} for
+even if it's attached, see \code{vignette("calls", package = "lave")} for
 details. This class provides call objects that use their \code{srcref}
 attribute for printing.
 }

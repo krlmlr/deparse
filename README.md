@@ -1,26 +1,26 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-dp
+lave
 ==
 
-The goal of the `dp` package is to provide an extensible deparsing function for R. Like `base::deparse()` and others, the output is intended to produce results that are (almost) identical to the input when evaluated. Unlike the `base` equivalents, `dp` aims at making the output as human-friendly as possible.
+The goal of the `lave` package is to provide an extensible deparsing function for R. Like `base::deparse()` and others, the output is intended to produce results that are (almost) identical to the input when evaluated. Unlike the `base` equivalents, `lave` aims at making the output as human-friendly as possible.
 
-The `dp()` function is rougly equivalent to `deparse()`, but with nicer defaults. The `dpc()` function returns an object which can be passed to `eval()` but also retains the desired formatting---a better `dput()`.
+The `lave()` function is rougly equivalent to `deparse()`, but with nicer defaults. The `lavec()` function returns an object which can be passed to `eval()` but also retains the desired formatting---a better `dput()`.
 
 Examples
 --------
 
 ``` r
-dp(1)
+lave(1)
 #> [1] "1"
-dpc(1L)
+lavec(1L)
 #> 1L
-dpc(Sys.time())
+lavec(Sys.time())
 #> as.POSIXct("2016-08-16 17:11:32 CEST")
-dpc(print)
+lavec(print)
 #> base::print
 
-eval(dpc(print))
+eval(lavec(print))
 #> function (x, ...) 
 #> UseMethod("print")
 #> <bytecode: 0x27c1ed8>
@@ -51,5 +51,5 @@ Installation
 Install via
 
 ``` r
-devtools::install_github("krlmlr/dp")
+devtools::install_github("krlmlr/lave")
 ```

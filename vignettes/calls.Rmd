@@ -11,7 +11,7 @@ vignette: >
 
 The default `print()` method prints the source if available (from a srcref attribute) for expression objects, but not for calls. See below for an example (run in R 3.3.1).
 
-It looks like this change has been introduced in R 2.10.0, in [revision r48366](https://github.com/wch/r-source/commit/107f16133e3db7#diff-12de104c9320556f0e99da345c6fb259L650) [2], but it hasn't been documented explicitly. I'm wondering if calls should use an attached srcref for printing. For now, `dp` uses the class `"srcref_call"` with an overridden `print()` method.
+It looks like this change has been introduced in R 2.10.0, in [revision r48366](https://github.com/wch/r-source/commit/107f16133e3db7#diff-12de104c9320556f0e99da345c6fb259L650) [2], but it hasn't been documented explicitly. I'm wondering if calls should use an attached srcref for printing. For now, `lave` uses the class `"srcref_call"` with an overridden `print()` method.
 
 
 ## Construct and parse a simple call

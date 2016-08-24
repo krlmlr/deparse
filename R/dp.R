@@ -1,45 +1,45 @@
 #' A nicer deparse
 #'
-#' \code{dp} is a reimplementation of \code{\link[base]{dput}} and related
+#' \code{lave} is a reimplementation of \code{\link[base]{dput}} and related
 #' functions. It tries its best to produce output that is easy to read
 #' (for humans), yet produces (almost) identical results to the input
 #' (for machines). This function is a generic, so other packages can easily
 #' provide implementations for the objects they define.
 #'
 #' @export
-dp <- function(x, ...) UseMethod("dp")
+lave <- function(x, ...) UseMethod("lave")
 
 #' @export
-dp.default <- function(x, ...) {
+lave.default <- function(x, ...) {
   paste(deparse(x, 500L, backtick = TRUE), collapse = "")
 }
 
 #' @export
-dp.Date <- function(x, ...) {
-  dp_call("as.Date", format(x))
+lave.Date <- function(x, ...) {
+  lave_call("as.Date", format(x))
 }
 
 #' @export
-dp.POSIXct <- function(x, ...) {
-  dp_call("as.POSIXct", format(x, usetz = TRUE))
+lave.POSIXct <- function(x, ...) {
+  lave_call("as.POSIXct", format(x, usetz = TRUE))
 }
 
 #' @export
-dp.POSIXlt <- function(x, ...) {
-  dp_call("as.POSIXlt", format(x, usetz = TRUE))
+lave.POSIXlt <- function(x, ...) {
+  lave_call("as.POSIXlt", format(x, usetz = TRUE))
 }
 
-dp_call <- function(call, argument) {
-  paste0(call, "(", dp(argument), ")")
+lave_call <- function(call, argument) {
+  paste0(call, "(", lave(argument), ")")
 }
 
 #' @export
-dp.function <- function(x, ...) {
+lave.function <- function(x, ...) {
   fun_in_namespace <- find_function_in_namespace(x)
   if (is.null(fun_in_namespace))
     NextMethod()
   else {
-    paste0(dp(as.name(fun_in_namespace$ns)), "::", dp(as.name(fun_in_namespace$fun)))
+    paste0(lave(as.name(fun_in_namespace$ns)), "::", lave(as.name(fun_in_namespace$fun)))
   }
 }
 
@@ -59,14 +59,14 @@ find_function_in_namespace <- function(fun) {
   list(ns = getNamespaceName(env), fun = same_name[[1L]])
 }
 
-#' @rdname dp
+#' @rdname lave
 #'
 #' @description
-#' The \code{dpc} function leverages \code{dp} by creating
+#' The \code{lavec} function leverages \code{lave} by creating
 #' a \code{call} object which can be evaluated but retains formatting
 #' (in the form of a \code{\link[base]{srcref}} attribute).
 #' @export
-dpc <- function(x, ...) {
-  text <- dp(x, ...)
-  as.srcref_call(srcfilecopy("<dpc>", text))
+lavec <- function(x, ...) {
+  text <- lave(x, ...)
+  as.srcref_call(srcfilecopy("<lavec>", text))
 }
