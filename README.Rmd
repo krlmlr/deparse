@@ -12,14 +12,14 @@ knitr::opts_chunk$set(
 )
 ```
 
-# lave
+# deparse
 
-The goal of the `lave` package is to provide an extensible deparsing function for R.
+The goal of the `deparse` package is to provide an extensible deparsing function for R.
 Like `base::deparse()` and others, the output is intended to produce results that are (almost) identical to the input when evaluated.
-Unlike the `base` equivalents, `lave` aims at making the output as human-friendly as possible.
+Unlike the `base` equivalents, `deparse` aims at making the output as human-friendly as possible.
 
-The `lave()` function is rougly equivalent to `deparse()`, but with nicer defaults.
-The `lavec()` function returns an object which can be passed to `eval()` but also retains the desired formatting---a better `dput()`.
+The `deparse()` function is rougly equivalent to `deparse()`, but with nicer defaults.
+The `deparsec()` function returns an object which can be passed to `eval()` but also retains the desired formatting---a better `dput()`.
 
 
 ## Examples
@@ -29,12 +29,12 @@ devtools::load_all()
 ```
 
 ```{r}
-lave(1)
-lavec(1L)
-lavec(Sys.time())
-lavec(print)
+deparse(1)
+deparsec(1L)
+deparsec(Sys.time())
+deparsec(print)
 
-eval(lavec(print))
+eval(deparsec(print))
 ```
 
 Compare this to the `dput()` output:
@@ -54,5 +54,5 @@ eval(parse(text = deparse(print)))
 Install via
 
 ```r
-devtools::install_github("krlmlr/lave")
+devtools::install_github("krlmlr/deparse")
 ```

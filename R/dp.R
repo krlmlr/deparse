@@ -1,45 +1,45 @@
 #' A nicer deparse
 #'
-#' \code{lave} is a reimplementation of \code{\link[base]{dput}} and related
+#' \code{deparse} is a reimplementation of \code{\link[base]{dput}} and related
 #' functions. It tries its best to produce output that is easy to read
 #' (for humans), yet produces (almost) identical results to the input
 #' (for machines). This function is a generic, so other packages can easily
 #' provide implementations for the objects they define.
 #'
 #' @export
-lave <- function(x, ...) UseMethod("lave")
+deparse <- function(x, ...) UseMethod("deparse")
 
 #' @export
-lave.default <- function(x, ...) {
+deparse.default <- function(x, ...) {
   paste(deparse(x, 500L, backtick = TRUE), collapse = "")
 }
 
 #' @export
-lave.Date <- function(x, ...) {
-  lave_call("as.Date", format(x))
+deparse.Date <- function(x, ...) {
+  deparse_call("as.Date", format(x))
 }
 
 #' @export
-lave.POSIXct <- function(x, ...) {
-  lave_call("as.POSIXct", format(x, usetz = TRUE))
+deparse.POSIXct <- function(x, ...) {
+  deparse_call("as.POSIXct", format(x, usetz = TRUE))
 }
 
 #' @export
-lave.POSIXlt <- function(x, ...) {
-  lave_call("as.POSIXlt", format(x, usetz = TRUE))
+deparse.POSIXlt <- function(x, ...) {
+  deparse_call("as.POSIXlt", format(x, usetz = TRUE))
 }
 
-lave_call <- function(call, argument) {
-  paste0(call, "(", lave(argument), ")")
+deparse_call <- function(call, argument) {
+  paste0(call, "(", deparse(argument), ")")
 }
 
 #' @export
-lave.function <- function(x, ...) {
+deparse.function <- function(x, ...) {
   fun_in_namespace <- find_function_in_namespace(x)
   if (is.null(fun_in_namespace))
     NextMethod()
   else {
-    paste0(lave(as.name(fun_in_namespace$ns)), "::", lave(as.name(fun_in_namespace$fun)))
+    paste0(deparse(as.name(fun_in_namespace$ns)), "::", deparse(as.name(fun_in_namespace$fun)))
   }
 }
 
@@ -59,14 +59,14 @@ find_function_in_namespace <- function(fun) {
   list(ns = getNamespaceName(env), fun = same_name[[1L]])
 }
 
-#' @rdname lave
+#' @rdname deparse
 #'
 #' @description
-#' The \code{lavec} function leverages \code{lave} by creating
+#' The \code{deparsec} function leverages \code{deparse} by creating
 #' a \code{call} object which can be evaluated but retains formatting
 #' (in the form of a \code{\link[base]{srcref}} attribute).
 #' @export
-lavec <- function(x, ...) {
-  text <- lave(x, ...)
-  as.srcref_call(srcfilecopy("<lavec>", text))
+deparsec <- function(x, ...) {
+  text <- deparse(x, ...)
+  as.srcref_call(srcfilecopy("<deparsec>", text))
 }

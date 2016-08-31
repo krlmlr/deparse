@@ -1,4 +1,4 @@
-Package: lave
+Package: deparse
 Title: What the Package Does (one line, title case)
 Version: 0.0-0
 Authors@R: person("Kirill", "Müller", role = c("aut", "cre"), email = "krlmlr+r@mailbox.org")

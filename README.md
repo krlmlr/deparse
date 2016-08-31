@@ -1,26 +1,26 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-lave
+deparse
 ==
 
-The goal of the `lave` package is to provide an extensible deparsing function for R. Like `base::deparse()` and others, the output is intended to produce results that are (almost) identical to the input when evaluated. Unlike the `base` equivalents, `lave` aims at making the output as human-friendly as possible.
+The goal of the `deparse` package is to provide an extensible deparsing function for R. Like `base::deparse()` and others, the output is intended to produce results that are (almost) identical to the input when evaluated. Unlike the `base` equivalents, `deparse` aims at making the output as human-friendly as possible.
 
-The `lave()` function is rougly equivalent to `deparse()`, but with nicer defaults. The `lavec()` function returns an object which can be passed to `eval()` but also retains the desired formatting---a better `dput()`.
+The `deparse()` function is rougly equivalent to `deparse()`, but with nicer defaults. The `deparsec()` function returns an object which can be passed to `eval()` but also retains the desired formatting---a better `dput()`.
 
 Examples
 --------
 
 ``` r
-lave(1)
+deparse(1)
 #> [1] "1"
-lavec(1L)
+deparsec(1L)
 #> 1L
-lavec(Sys.time())
+deparsec(Sys.time())
 #> as.POSIXct("2016-08-16 17:11:32 CEST")
-lavec(print)
+deparsec(print)
 #> base::print
 
-eval(lavec(print))
+eval(deparsec(print))
 #> function (x, ...) 
 #> UseMethod("print")
 #> <bytecode: 0x27c1ed8>
@@ -51,5 +51,5 @@ Installation
 Install via
 
 ``` r
-devtools::install_github("krlmlr/lave")
+devtools::install_github("krlmlr/deparse")
 ```
