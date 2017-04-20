@@ -11,7 +11,7 @@ deparse <- function(x, ...) UseMethod("deparse")
 
 #' @export
 deparse.default <- function(x, ...) {
-  paste(deparse(x, 500L, backtick = TRUE), collapse = "")
+  paste(base::deparse(x, 500L, backtick = TRUE), collapse = "")
 }
 
 #' @export
