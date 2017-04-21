@@ -1,3 +1,4 @@
+#' @export
 deparse.factor <- function(x, ...) {
   fac_items <- as.character(x)
   fac_items_dp <- deparse(fac_items)
