@@ -17,8 +17,10 @@ as.srcref_call <- function(x, ...) UseMethod("as.srcref_call")
 as.srcref_call.srcfile <- function(x, ...) {
   ex <- parse_srcfile(x)
   cl <- ex[[1L]]
-  class(cl) <- "srcref_call"
-  attr(cl, "srcref") <- attr(ex, "srcref")[[1]]
+  if (!is.null(cl)) {
+    class(cl) <- "srcref_call"
+    attr(cl, "srcref") <- attr(ex, "srcref")[[1]]
+  }
   cl
 }
 
