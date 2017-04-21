@@ -22,7 +22,7 @@ deparse.default <- function(x, ...) {
 
 #' @export
 deparse.Date <- function(x, ...) {
-  cdeparse_call("as.Date", format(x))
+  deparse_call("as.Date", format(x))
 }
 
 #' @export

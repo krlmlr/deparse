@@ -1,6 +1,7 @@
 context("deparse()")
 
 library(tibble)
+library(dplyr)
 
 test_that("deparse handles lists appropriately", {
   check_deparse_identical(list(LETTERS))
@@ -27,4 +28,10 @@ test_that("deparse handles data.frames", {
   # Check as_tribble works ok
   check_deparse_identical(tibble(x = 1:5, y = 4, z = LETTERS[1:5]), as_tribble = TRUE)
   check_deparse_identical(tibble(x = 1:3, y = list(4:6, 7:9, 10:15)))
+
+  # Check as_tribble works ok for more complex types
+  check_deparse_identical(tibble(
+    x = as.Date(c("2013-01-02", "2014-02-03")),
+    y = factor(c("A", "B"), levels = c("B", "A"))
+  ), as_tribble = TRUE)
 })
