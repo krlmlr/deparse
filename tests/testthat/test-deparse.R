@@ -12,6 +12,11 @@ test_that("deparse handles lists appropriately", {
   attr(my_list, "my_attr") <- "test"
 
   check_deparse_identical(my_list)
+
+  my_classed_list <- my_list
+  class(my_classed_list) <- "test_class"
+
+  check_deparse_identical(my_classed_list)
 })
 
 test_that("deparse handles basic types", {
