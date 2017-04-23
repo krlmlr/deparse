@@ -24,6 +24,9 @@ test_that("deparse handles dates", {
 
 test_that("deparse handles functions", {
   check_deparse_equal(function(x) x + 1)
+  check_deparse_equal(mean)
+  expect_output(print(deparsec(function(x) x + 1)), "function \\(x\\) x \\+ 1")
+  expect_output(print(deparsec(function(x) x + 1), useSource = FALSE), "srcref_call")
 })
 
 test_that("deparse handles factors", {
@@ -33,6 +36,11 @@ test_that("deparse handles factors", {
 
 test_that("deparse handles data.frames", {
   check_deparse_identical(data.frame(x = 1:5, y = 4, z = LETTERS[1:5]))
+  check_deparse_identical(
+    data.frame(
+      x = 1:5, y = 4, z = LETTERS[1:5], row.names = 6:10
+      )
+  )
   check_deparse_identical(tibble(x = 1:5, y = 4, z = LETTERS[1:5]))
 
   # Check as_tribble works ok
@@ -44,4 +52,9 @@ test_that("deparse handles data.frames", {
     x = as.Date(c("2013-01-02", "2014-02-03")),
     y = factor(c("A", "B"), levels = c("B", "A"))
   ), as_tribble = TRUE)
+
+  # Check as_tibble warns appropriately for row.names
+  expect_warning(
+    deparse(data.frame(x = 1, row.names = "A"), as_tibble = TRUE),
+    "row\\.names are not supported by `tibble`")
 })

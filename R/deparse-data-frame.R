@@ -12,8 +12,8 @@ deparse.data.frame <- function(x, as_tibble = FALSE, as_tribble = FALSE, ...) {
     if (as_tibble) {
       warning("row.names are not supported by `tibble`")
     } else {
-      columns <- c(columns, sprintf("row.names = c(%s)",
-                                    paste(sprintf("\"%s\"", row.names(x)), collapse = ", ")))
+      columns <- c(columns, sprintf("row.names = %s",
+                                    deparse(attr(x, "row.names"))))
     }
   }
 
