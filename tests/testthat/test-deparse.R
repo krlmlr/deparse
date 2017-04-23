@@ -16,6 +16,16 @@ test_that("deparse handles basic types", {
   check_deparse_identical(NULL)
 })
 
+test_that("deparse handles dates", {
+  check_deparse_identical(Sys.Date())
+  check_deparse_identical(as.POSIXct("2003-04-05 06:07:08 UTC"))
+  check_deparse_identical(as.POSIXlt("2003-04-05 06:07:08 UTC"))
+})
+
+test_that("deparse handles functions", {
+  check_deparse_equal(function(x) x + 1)
+})
+
 test_that("deparse handles factors", {
   check_deparse_identical(factor(1:5))
   check_deparse_identical(factor(1:5, levels = c(3:1)))
