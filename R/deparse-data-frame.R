@@ -40,7 +40,7 @@ deparse_tribble <- function(x) {
       return(list(col_data = cur_call, call = as.symbol(col_name)))
     }
     if (is.call(cur_call) && length(cur_call) > 1L) {
-      res <- find_c(cur_call[[2L]])
+      res <- find_and_replace_c(cur_call[[2L]])
       if (!is.null(res)) {
         cur_call[[2L]] <- res$call
         return(list(col_data = res$col_data, call = cur_call))
@@ -81,7 +81,7 @@ deparse_tribble <- function(x) {
     if (!is.null(res$col_call)) {
       col_calls <- c(
         col_calls,
-        setNames(list(deparse(res$col_call)), col_names[i])
+        stats::setNames(list(deparse(res$col_call)), col_names[i])
       )
     }
   }

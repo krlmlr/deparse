@@ -9,6 +9,11 @@ deparse(x, ...)
 
 deparsec(x, ...)
 }
+\arguments{
+\item{x}{object to deparse}
+
+\item{...}{passed to other methods}
+}
 \description{
 \code{deparse} is a reimplementation of \code{\link[base]{dput}} and related
 functions. It tries its best to produce output that is easy to read

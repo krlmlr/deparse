@@ -9,6 +9,15 @@ srcref_call(call, srcref)
 
 as.srcref_call(x, ...)
 }
+\arguments{
+\item{call}{call}
+
+\item{srcref}{srcref}
+
+\item{x}{object}
+
+\item{...}{passed to other methods}
+}
 \description{
 As of R 2.10.0, \code{\link[base]{call}} objects don't use a
 \code{\link[base]{srcref}} attribute

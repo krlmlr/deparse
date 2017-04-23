@@ -5,13 +5,21 @@
 #' even if it's attached, see \code{vignette("calls", package = "deparse")} for
 #' details. This class provides call objects that use their \code{srcref}
 #' attribute for printing.
+#'
+#' @param call call
+#' @param srcref srcref
 srcref_call <- function(call, srcref) {
   stop("NYI")
 }
 
+#' @param x object
+#' @param ... passed to other methods
+#'
 #' @rdname srcref_call
 #' @export
-as.srcref_call <- function(x, ...) UseMethod("as.srcref_call")
+as.srcref_call <- function(x, ...) {
+  UseMethod("as.srcref_call")
+}
 
 #' @export
 as.srcref_call.srcfile <- function(x, ...) {
@@ -26,7 +34,7 @@ as.srcref_call.srcfile <- function(x, ...) {
 
 #' @export
 print.srcref_call <- function(x, ..., useSource = TRUE) {
-  if (!useSource || is.null(srcref <- getSrcref(x)))
+  if (!useSource || is.null(srcref <- utils::getSrcref(x)))
     NextMethod()
   else
     print(srcref, ...)
