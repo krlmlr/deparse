@@ -7,6 +7,9 @@ r:
 - release
 - devel
 
+r_packages:
+- covr
+
 r_github_packages:
 - hadley/rlang
 
