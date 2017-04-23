@@ -17,7 +17,11 @@ deparse <- function(x, ...) {
 
 #' @export
 deparse.default <- function(x, ...) {
-  paste(base::deparse(x, 500L, backtick = TRUE), collapse = "")
+  if (is.list(x)) {
+    deparse.list(x, ...)
+  } else {
+    paste(base::deparse(x, 500L, backtick = TRUE), collapse = "")
+  }
 }
 
 #' @export

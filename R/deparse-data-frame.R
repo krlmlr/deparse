@@ -34,13 +34,17 @@ deparse.tbl_df <- function(x, as_tibble = TRUE, as_tribble = FALSE, ...) {
 deparse_tribble <- function(x) {
   col_names <- names(x)
 
-  find_and_replace_c <- function(cur_call, col_name) {
-    if (!is.call(cur_call) || identical(cur_call[[1L]], quote(c)) ||
-        identical(cur_call[[1L]], quote(`:`))) {
+  # Finds an appropriate vector wrapped in function calls and replaces the
+  # vector with the column name
+  # Returns NULL if there is no matching vector
+  find_and_replace_c <- function(cur_call, col_name, n_rows) {
+    if ((!is.call(cur_call) && n_rows == 1) || ((identical(cur_call[[1L]], quote(c)) ||
+        identical(cur_call[[1L]], quote(`:`))) &&
+        length(eval(cur_call)) == n_rows)) {
       return(list(col_data = cur_call, call = as.symbol(col_name)))
     }
     if (is.call(cur_call) && length(cur_call) > 1L) {
-      res <- find_and_replace_c(cur_call[[2L]])
+      res <- find_and_replace_c(cur_call[[2L]], col_name, n_rows)
       if (!is.null(res)) {
         cur_call[[2L]] <- res$call
         return(list(col_data = res$col_data, call = cur_call))
@@ -59,7 +63,7 @@ deparse_tribble <- function(x) {
           identical(col_dp[[1L]], quote(`:`))) {
         col_data <- column
       } else if (length(col_dp) > 1L && !identical(col_dp[[1L]], quote(list))) {
-        res <- find_and_replace_c(col_dp[[2L]], col_name)
+        res <- find_and_replace_c(col_dp[[2L]], col_name, nrow(x))
         if (!is.null(res)) {
           col_call <- col_dp
           col_call[[2L]] <- res$call

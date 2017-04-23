@@ -7,6 +7,11 @@ test_that("deparse handles lists appropriately", {
   check_deparse_identical(list(LETTERS))
   check_deparse_identical(list(x = 1:4))
   check_deparse_identical(list(list(list(1:4), y = 1:5)))
+
+  my_list <- list(x = 1:4)
+  attr(my_list, "my_attr") <- "test"
+
+  check_deparse_identical(my_list)
 })
 
 test_that("deparse handles basic types", {
