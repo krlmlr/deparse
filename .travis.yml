@@ -7,5 +7,8 @@ r:
 - release
 - devel
 
+r_github_packages:
+- hadley/rlang
+
 after_success:
 - Rscript -e 'covr::codecov()'
