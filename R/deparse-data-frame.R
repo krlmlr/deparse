@@ -1,8 +1,9 @@
 #' @export
-deparse.data.frame <- function(x, as_tibble = FALSE, as_tribble = FALSE, ...) {
+deparse.data.frame <-
+  function(x, as_tibble = FALSE, as_tribble = FALSE, generate_mutate = TRUE, ...) {
 
   if (as_tribble) {
-    return(deparse_tribble(x))
+    return(deparse_tribble(x, generate_mutate, ...))
   }
 
   col_names <- vapply(names(x), function(nm) deparse(as.name(nm)), character(1))
@@ -31,15 +32,17 @@ deparse.tbl_df <- function(x, as_tibble = TRUE, as_tribble = FALSE, ...) {
   deparse.data.frame(x = x, as_tibble = as_tibble, as_tribble = as_tribble, ...)
 }
 
-deparse_tribble <- function(x) {
+deparse_tribble <- function(x, generate_mutate, ...) {
   col_names <- names(x)
+
+  row_item_calls <- list(quote(`:`), quote(c), quote(list))
 
   # Finds an appropriate vector wrapped in function calls and replaces the
   # vector with the column name
   # Returns NULL if there is no matching vector
   find_and_replace_c <- function(cur_call, col_name, n_rows) {
-    if ((!is.call(cur_call) && n_rows == 1) || ((identical(cur_call[[1L]], quote(c)) ||
-        identical(cur_call[[1L]], quote(`:`))) &&
+    if ((!is.call(cur_call) && n_rows == 1) ||
+        (is.call(cur_call) && some(row_item_calls, identical, cur_call[[1L]]) &&
         length(eval(cur_call)) == n_rows)) {
       return(list(col_data = cur_call, call = as.symbol(col_name)))
     }
@@ -59,10 +62,8 @@ deparse_tribble <- function(x) {
     col_dp <- deparsec(column)
     col_call <- NULL
     if (is.call(col_dp)) {
-      if (identical(col_dp[[1L]], quote(c)) ||
-          identical(col_dp[[1L]], quote(`:`))) {
-        col_data <- column
-      } else if (length(col_dp) > 1L && !identical(col_dp[[1L]], quote(list))) {
+      if (!some(row_item_calls, identical, col_dp[[1L]]) &&
+          length(col_dp) > 1L && !identical(col_dp[[1L]], quote(list))) {
         res <- find_and_replace_c(col_dp[[2L]], col_name, nrow(x))
         if (!is.null(res)) {
           col_call <- col_dp
@@ -80,13 +81,17 @@ deparse_tribble <- function(x) {
   dim(output_data) <- dim(x)
 
   for (i in seq_along(x)) {
-    res <- generate_column_calls(x[[i]], col_names[i])
-    output_data[, i] <- map_chr(res$col_data, deparse)
-    if (!is.null(res$col_call)) {
-      col_calls <- c(
-        col_calls,
-        stats::setNames(list(deparse(res$col_call)), col_names[i])
-      )
+    if (generate_mutate) {
+      res <- generate_column_calls(x[[i]], col_names[i])
+      output_data[, i] <- map_chr(res$col_data, deparse, ...)
+      if (!is.null(res$col_call)) {
+        col_calls <- c(
+          col_calls,
+          stats::setNames(list(deparse(res$col_call)), col_names[i])
+        )
+      }
+    } else {
+      output_data[, i] <- map_chr(x[[i]], deparse, ...)
     }
   }
 

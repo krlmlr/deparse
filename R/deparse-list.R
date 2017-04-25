@@ -44,7 +44,9 @@ wrap_structure <- function(x, deparsed, current_class, exclude_attrs = NULL) {
   if (add_attrs != "") {
     add_attrs <- paste0(", ", add_attrs)
   }
-  if (length(add_attrs) > 0L || add_class != "") {
+  if (add_attrs != "" || add_class != "") {
     sprintf("structure(%s%s%s)", deparsed, add_class, add_attrs)
+  } else {
+    deparsed
   }
 }
