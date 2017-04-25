@@ -42,6 +42,7 @@ test_that("deparse handles functions", {
 test_that("deparse handles factors", {
   check_deparse_identical(factor(1:5))
   check_deparse_identical(factor(1:5, levels = c(3:1)))
+  check_deparse_identical(ordered(LETTERS))
 })
 
 test_that("deparse handles data.frames", {
