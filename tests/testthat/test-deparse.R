@@ -58,13 +58,20 @@ test_that("deparse handles data.frames", {
   check_deparse_identical(tibble(x = 1:3, y = list(4:6, 7:9, 10:15)))
 
   # Check as_tribble works ok for more complex types
-  check_deparse_identical(tibble(
+
+  test_tbl <- tibble(
     x = as.Date(c("2013-01-02", "2014-02-03")),
     y = factor(c("A", "B"), levels = c("B", "A"))
-  ), as_tribble = TRUE)
+  )
+  check_deparse_identical(test_tbl, as_tribble = TRUE)
+  expect_warning(
+    deparse(test_tbl, as_tribble = TRUE, generate_mutate = FALSE),
+    "deparsed code may not function correctly"
+    )
 
   # Check as_tibble warns appropriately for row.names
   expect_warning(
     deparse(data.frame(x = 1, row.names = "A"), as_tibble = TRUE),
     "row\\.names are not supported by `tibble`")
+
 })

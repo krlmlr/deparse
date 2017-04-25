@@ -81,18 +81,18 @@ deparse_tribble <- function(x, generate_mutate, ...) {
   dim(output_data) <- dim(x)
 
   for (i in seq_along(x)) {
-    if (generate_mutate) {
       res <- generate_column_calls(x[[i]], col_names[i])
-      output_data[, i] <- map_chr(res$col_data, deparse, ...)
+      if (generate_mutate) {
+        output_data[, i] <- map_chr(res$col_data, deparse, ...)
+      } else {
+        output_data[, i] <- map_chr(x[[i]], deparse, ...)
+      }
       if (!is.null(res$col_call)) {
         col_calls <- c(
           col_calls,
           stats::setNames(list(deparse(res$col_call)), col_names[i])
         )
       }
-    } else {
-      output_data[, i] <- map_chr(x[[i]], deparse, ...)
-    }
   }
 
   syntactic_name <- function(x) {
@@ -118,16 +118,20 @@ deparse_tribble <- function(x, generate_mutate, ...) {
     )
 
   if (length(col_calls) > 0L) {
-    output_final <- paste0(
-      output_final,
-      " %>% \n",
-      "  mutate(\n",
-      paste(
-        sprintf("    %s = %s", names(col_calls), col_calls),
-        collapse = ",\n"
-        ),
-      "\n  )"
-    )
+    if (generate_mutate) {
+      output_final <- paste0(
+        output_final,
+        " %>% \n",
+        "  mutate(\n",
+        paste(
+          sprintf("    %s = %s", names(col_calls), col_calls),
+          collapse = ",\n"
+          ),
+        "\n  )"
+      )
+    } else {
+      warning("Without `generate_mutate`, deparsed code may not function correctly on types such as factors")
+    }
   }
   output_final
 }
