@@ -35,8 +35,14 @@ test_that("deparse handles dates", {
 test_that("deparse handles functions", {
   check_deparse_equal(function(x) x + 1)
   check_deparse_equal(mean)
-  expect_output(print(deparsec(function(x) x + 1)), "function \\(x\\) x \\+ 1")
-  expect_output(print(deparsec(function(x) x + 1), useSource = FALSE), "srcref_call")
+  expect_output(
+    print(deparsec(function(x) x + 1)),
+    "function (x) x + 1",
+    fixed = TRUE)
+  expect_output(
+    print(deparsec(function(x) x + 1), useSource = FALSE),
+    "srcref_call",
+    fixed = TRUE)
 })
 
 test_that("deparse handles factors", {
@@ -73,6 +79,7 @@ test_that("deparse handles data.frames", {
   # Check as_tibble warns appropriately for row.names
   expect_warning(
     deparse(data.frame(x = 1, row.names = "A"), as_tibble = TRUE),
-    "row\\.names are not supported by `tibble`")
-
+    "row.names are not supported by `tibble`",
+    fixed = TRUE
+    )
 })

@@ -11,7 +11,7 @@ deparse.data.frame <-
 
   if (any(row.names(x) != as.character(seq_len(nrow(x))))) {
     if (as_tibble) {
-      warning("row.names are not supported by `tibble`")
+      warn("row.names are not supported by `tibble`")
     } else {
       columns <- c(columns, sprintf("row.names = %s",
                                     deparse(attr(x, "row.names"))))
@@ -104,7 +104,7 @@ deparse_tribble <- function(x, generate_mutate, ...) {
   )
 
   output_collapsed <- map_chr(
-    1:nrow(x),
+    seq_len(nrow(x)),
     function(i) paste(output_data[i, ], collapse = ", ")
   )
 
