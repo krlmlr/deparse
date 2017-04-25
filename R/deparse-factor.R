@@ -5,5 +5,10 @@ deparse.factor <- function(x, ...) {
   if (!identical(levels(x), levels(factor(fac_items)))) {
     fac_items_dp <- sprintf("%s, levels = %s", fac_items_dp, deparse(levels(x)))
   }
-  sprintf("factor(%s)", fac_items_dp)
+  if (is.ordered(x)) {
+    func_name <- "ordered"
+  } else {
+    func_name <- "factor"
+  }
+  sprintf("%s(%s)", func_name, fac_items_dp)
 }
