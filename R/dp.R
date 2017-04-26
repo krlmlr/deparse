@@ -6,17 +6,23 @@
 #' (for machines). This function is a generic, so other packages can easily
 #' provide implementations for the objects they define.
 #'
+#' @param x object to deparse
+#' @param ... passed to other methods
+#'
+#' @import rlang
 #' @export
-deparse <- function(x, ...) UseMethod("deparse")
+deparse <- function(x, ...) {
+  UseMethod("deparse")
+}
 
 #' @export
 deparse.default <- function(x, ...) {
-  paste(deparse(x, 500L, backtick = TRUE), collapse = "")
+  paste(base::deparse(x, 500L, backtick = TRUE), collapse = "")
 }
 
 #' @export
 deparse.Date <- function(x, ...) {
-  deparse_call("as.Date", format(x))
+  cdeparse_call("as.Date", format(x))
 }
 
 #' @export

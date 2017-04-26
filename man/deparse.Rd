@@ -9,6 +9,11 @@ deparse(x, ...)
 
 deparsec(x, ...)
 }
+\arguments{
+\item{x}{object to deparse}
+
+\item{...}{passed to other methods}
+}
 \description{
 \code{deparse} is a reimplementation of \code{\link[base]{dput}} and related
 functions. It tries its best to produce output that is easy to read
@@ -20,4 +25,3 @@ The \code{deparsec} function leverages \code{deparse} by creating
 a \code{call} object which can be evaluated but retains formatting
 (in the form of a \code{\link[base]{srcref}} attribute).
 }
-
