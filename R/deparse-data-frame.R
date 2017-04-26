@@ -2,6 +2,11 @@
 deparse.data.frame <-
   function(x, as_tibble = FALSE, as_tribble = FALSE, generate_mutate = TRUE, ...) {
 
+    need_row_names <- any(row.names(x) != as.character(seq_len(nrow(x))))
+    if ((as_tibble || as_tribble) && need_row_names) {
+        warn("row.names are not supported by `tibble`")
+    }
+
   if (as_tribble) {
     return(deparse_tribble(x, generate_mutate, ...))
   }
@@ -9,13 +14,9 @@ deparse.data.frame <-
   col_names <- vapply(names(x), function(nm) deparse(as.name(nm)), character(1))
   columns <- sprintf("%s = %s", col_names, vapply(x, deparse, character(1)))
 
-  if (any(row.names(x) != as.character(seq_len(nrow(x))))) {
-    if (as_tibble) {
-      warn("row.names are not supported by `tibble`")
-    } else {
+  if (need_row_names && !as_tibble) {
       columns <- c(columns, sprintf("row.names = %s",
                                     deparse(attr(x, "row.names"))))
-    }
   }
 
   if (as_tibble) {
@@ -79,20 +80,24 @@ deparse_tribble <- function(x, generate_mutate, ...) {
 
   output_data <- character(nrow(x) * ncol(x))
   dim(output_data) <- dim(x)
+  col_widths <- integer(ncol(x))
+  col_storage <- character(ncol(x))
 
   for (i in seq_along(x)) {
-      res <- generate_column_calls(x[[i]], col_names[i])
-      if (generate_mutate) {
-        output_data[, i] <- map_chr(res$col_data, deparse, ...)
-      } else {
-        output_data[, i] <- map_chr(x[[i]], deparse, ...)
-      }
-      if (!is.null(res$col_call)) {
-        col_calls <- c(
-          col_calls,
-          stats::setNames(list(deparse(res$col_call)), col_names[i])
-        )
-      }
+    res <- generate_column_calls(x[[i]], col_names[i])
+    if (generate_mutate) {
+      col_data <- res$col_data
+    } else {
+      col_data <- x[[i]]
+    }
+    output_data[, i] <- map_chr(col_data, deparse, ...)
+    col_storage[i] <- storage.mode(col_data)
+    col_widths[i] <- max(nchar(output_data[, i]))
+
+    if (!is.null(res$col_call)) {
+      col_calls <- c(col_calls,
+                     set_names(list(deparse(res$col_call)), col_names[i]))
+    }
   }
 
   syntactic_name <- function(x) {
@@ -103,16 +108,39 @@ deparse_tribble <- function(x, generate_mutate, ...) {
     map_chr(col_names, syntactic_name)
   )
 
+  col_widths <- pmax(col_widths, nchar(output_col_names)) + 1
+
+  col_format <- paste0(
+    "%-",
+    # ifelse(col_storage %in% c("integer", "double"), "", "-"),
+    col_widths,
+    "s"
+    )
+
+  for (i in seq_len(ncol(x))) {
+    output_data[, i] <- sprintf(col_format[i], paste0(output_data[, i], ","))
+    output_col_names[i] <- sprintf(
+      col_format[i],
+      paste0(output_col_names[i], ",")
+    )
+  }
+
+  output_data[length(output_data)] <- sub(
+    ", *$",
+    "",
+    output_data[length(output_data)]
+    )
+
   output_collapsed <- map_chr(
     seq_len(nrow(x)),
-    function(i) paste(output_data[i, ], collapse = ", ")
+    function(i) paste(output_data[i, ], collapse = " ")
   )
 
   output_final <- paste0(
     "tribble(\n  ",
     paste(
-      c(paste(output_col_names, collapse = ", "), output_collapsed),
-      collapse = ",\n  "
+      c(paste(output_col_names, collapse = " "), output_collapsed),
+      collapse = "\n  "
       ),
     "\n  )"
     )
