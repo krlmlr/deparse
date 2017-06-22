@@ -14,7 +14,9 @@ knitr::opts_chunk$set(
 
 # deparse
 
-[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/NikNakk/deparse?branch=master&svg=true)](https://ci.appveyor.com/project/NikNakk/deparse)
+[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/krlmlr/deparse?branch=master&svg=true)](https://ci.appveyor.com/project/krlmlr/deparse)
+
+[![Travis Build Status](https://www.travis-ci.org/krlmlr/deparse.svg?branch=master)](https://www.travis-ci.org/krlmlr/deparse)
 
 The goal of the `deparse` package is to provide an extensible deparsing function for R.
 Like `base::deparse()` and others, the output is intended to produce results that are (almost) identical to the input when evaluated.

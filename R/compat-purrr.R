@@ -1,10 +1,12 @@
-# nocov - compat-purrr (last updated: rlang 0.0.0.9007)
+# compat-purrr (last updated: rlang 0.0.0.9007)
 
 # This file serves as a reference for compatibility functions for
 # purrr. They are not drop-in replacements but allow a similar style
 # of programming. This is useful in cases where purrr is too heavy a
 # package to depend on. Please find the most recent version in rlang's
 # repository.
+
+# nocov start
 
 map <- function(.x, .f, ...) {
   lapply(.x, .f, ...)
