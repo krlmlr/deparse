@@ -1,8 +1,5 @@
 context("deparse()")
 
-library(tibble)
-library(dplyr)
-
 test_that("deparse handles lists appropriately", {
   check_deparse_identical(list(LETTERS))
   check_deparse_identical(list(x = 1:4))
@@ -61,8 +58,8 @@ test_that("deparse handles data.frames", {
   check_deparse_identical(tibble(x = 1:5, y = 4, z = LETTERS[1:5]))
 
   # Check as_tribble works ok
-  check_deparse_identical(tibble(x = 1:5, y = 4, z = LETTERS[1:5]), as_tribble = TRUE)
-  check_deparse_identical(tibble(x = 1:3, y = list(4:6, 7:9, 10:15)))
+  check_deparse_identical(tibble::tibble(x = 1:5, y = 4, z = LETTERS[1:5]), as_tribble = TRUE)
+  check_deparse_identical(tibble::tibble(x = 1:3, y = list(4:6, 7:9, 10:15)))
 
   # Check as_tribble works ok for more complex types
 

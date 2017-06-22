@@ -1,6 +1,6 @@
 Package: deparse
-Title: A Nicer Dearse
-Version: 0.0-1
+Title: A Nicer Deparse
+Version: 0.0-0
 Encoding: UTF-8
 Authors@R: c(
     person("Kirill", "Müller", role = c("aut", "cre"), email = "krlmlr+r@mailbox.org"),
@@ -12,16 +12,15 @@ Depends:
 License: GPL-3
 LazyData: true
 Date: 2016-08-16
-URLNote: https://github.com/krlmlr/
-BugReports: https://github.com/krlmlr/issues/
-URL: http://krlmlr.github.io/
+BugReports: https://github.com/krlmlr/deparse/issues/
+URL: http://krlmlr.github.io/deparse
 Imports:
    rlang
 Suggests:
+    dplyr,
     knitr,
     rmarkdown,
     testthat,
-    tibble,
-    dplyr
+    tibble
 VignetteBuilder: knitr
 RoxygenNote: 6.0.1

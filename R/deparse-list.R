@@ -1,6 +1,5 @@
 #' @export
 deparse.list <- function(x, ...) {
-  my_attrs <- attributes(x)
   create_list_item <- function(name, item) {
     if (name != "") {
       name <- paste0(name, " = ")
@@ -29,8 +28,8 @@ wrap_structure <- function(x, deparsed, current_class, exclude_attrs = NULL) {
   } else {
     add_class <- ""
   }
-  add_attr_names <- setdiff(names(x_attrs), exclude_attrs)
-  add_attr_labels <- stats::setNames(add_attr_names, add_attr_names)
+  add_attr_names <- setdiff(names2(x_attrs), exclude_attrs)
+  add_attr_labels <- set_names(add_attr_names, add_attr_names)
   to_replace <- match(c("dim", "dimnames", "tsp", "levels"), add_attr_names)
   if (any(!is.na(to_replace))) {
     add_attr_labels[na.omit(to_replace)] <-

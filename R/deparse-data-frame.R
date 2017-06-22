@@ -1,11 +1,10 @@
 #' @export
-deparse.data.frame <-
-  function(x, as_tibble = FALSE, as_tribble = FALSE, generate_mutate = TRUE, ...) {
+deparse.data.frame <- function(x, as_tibble = FALSE, as_tribble = FALSE, generate_mutate = TRUE, ...) {
 
-    need_row_names <- any(row.names(x) != as.character(seq_len(nrow(x))))
-    if ((as_tibble || as_tribble) && need_row_names) {
-        warn("row.names are not supported by `tibble`")
-    }
+  need_row_names <- tibble::has_rownames(x)
+  if ((as_tibble || as_tribble) && need_row_names) {
+      warn("row.names are not supported by `tibble`")
+  }
 
   if (as_tribble) {
     return(deparse_tribble(x, generate_mutate, ...))
@@ -158,7 +157,7 @@ deparse_tribble <- function(x, generate_mutate, ...) {
         "\n  )"
       )
     } else {
-      warning("Without `generate_mutate`, deparsed code may not function correctly on types such as factors")
+      warn("Without `generate_mutate`, deparsed code may not function correctly on types such as factors")
     }
   }
   output_final
