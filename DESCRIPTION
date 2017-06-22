@@ -1,0 +1,26 @@
+Package: deparse
+Title: A Nicer Deparse
+Version: 0.0-1
+Encoding: UTF-8
+Authors@R: c(
+    person("Kirill", "Müller", role = c("aut", "cre"), email = "krlmlr+r@mailbox.org"),
+    person("Nick", "Kennedy", role = "aut", email = "r@nick-kennedy.com")
+    )
+Description: What the package does (one paragraph).
+Depends:
+    R (>= 3.3.1)
+License: GPL-3
+LazyData: true
+Date: 2017-06-22
+BugReports: https://github.com/krlmlr/deparse/issues/
+URL: http://krlmlr.github.io/deparse
+Imports:
+   rlang
+Suggests:
+    dplyr,
+    knitr,
+    rmarkdown,
+    testthat,
+    tibble
+VignetteBuilder: knitr
+RoxygenNote: 6.0.1

@@ -1,0 +1,17 @@
+# R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
+
+language: r
+cache: packages
+r:
+- oldrel
+- release
+- devel
+
+r_packages:
+- covr
+
+r_github_packages:
+- hadley/rlang
+
+after_success:
+- Rscript -e 'covr::codecov()'

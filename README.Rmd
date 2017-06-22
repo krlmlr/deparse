@@ -1,0 +1,62 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, echo = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "README-"
+)
+```
+
+# deparse
+
+[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/krlmlr/deparse?branch=master&svg=true)](https://ci.appveyor.com/project/krlmlr/deparse)
+
+[![Travis Build Status](https://www.travis-ci.org/krlmlr/deparse.svg?branch=master)](https://www.travis-ci.org/krlmlr/deparse)
+
+The goal of the `deparse` package is to provide an extensible deparsing function for R.
+Like `base::deparse()` and others, the output is intended to produce results that are (almost) identical to the input when evaluated.
+Unlike the `base` equivalents, `deparse` aims at making the output as human-friendly as possible.
+
+The `deparse()` function is rougly equivalent to `deparse()`, but with nicer defaults.
+The `deparsec()` function returns an object which can be passed to `eval()` but also retains the desired formatting---a better `dput()`.
+
+
+## Examples
+
+```{r echo=FALSE, message=FALSE}
+devtools::load_all()
+```
+
+```{r}
+deparse(1)
+deparsec(1L)
+deparsec(Sys.time())
+deparsec(print)
+
+eval(deparsec(print))
+```
+
+Compare this to the `dput()` output:
+
+```{r}
+deparse(1)
+dput(1L)
+dput(Sys.time())
+dput(print)
+
+eval(parse(text = deparse(print)))
+```
+
+
+## Installation
+
+Install via
+
+```r
+devtools::install_github("krlmlr/deparse")
+```
