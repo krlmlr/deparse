@@ -6,7 +6,8 @@ Authors@R: c(
     person("Kirill", "Müller", role = c("aut", "cre"), email = "krlmlr+r@mailbox.org"),
     person("Nick", "Kennedy", role = "aut", email = "r@nick-kennedy.com")
     )
-Description: What the package does (one paragraph).
+Description: A drop-in replacement for 'deparse()' that generates
+    nicely formatted expressions by default.
 Depends:
     R (>= 3.3.1)
 License: GPL-3
