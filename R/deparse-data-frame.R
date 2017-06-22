@@ -141,14 +141,14 @@ deparse_tribble <- function(x, generate_mutate, ...) {
       c(paste(output_col_names, collapse = " "), output_collapsed),
       collapse = "\n  "
       ),
-    "\n  )"
+    "\n)"
     )
 
   if (length(col_calls) > 0L) {
     if (generate_mutate) {
       output_final <- paste0(
         output_final,
-        " %>% \n",
+        " %>%\n",
         "  mutate(\n",
         paste(
           sprintf("    %s = %s", names(col_calls), col_calls),
