@@ -55,7 +55,7 @@ test_that("deparse handles data.frames", {
       x = 1:5, y = 4, z = LETTERS[1:5], row.names = 6:10
       )
   )
-  check_deparse_identical(tibble(x = 1:5, y = 4, z = LETTERS[1:5]))
+  check_deparse_identical(tibble::tibble(x = 1:5, y = 4, z = LETTERS[1:5]))
 
   # Check as_tribble works ok
   check_deparse_identical(tibble::tibble(x = 1:5, y = 4, z = LETTERS[1:5]), as_tribble = TRUE)
@@ -63,7 +63,7 @@ test_that("deparse handles data.frames", {
 
   # Check as_tribble works ok for more complex types
 
-  test_tbl <- tibble(
+  test_tbl <- tibble::tibble(
     x = as.Date(c("2013-01-02", "2014-02-03")),
     y = factor(c("A", "B"), levels = c("B", "A"))
   )
